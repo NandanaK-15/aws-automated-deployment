@@ -20,9 +20,9 @@ unzip -o artifact.zip -d myapp
 cd myapp
 
 # Set RDS environment variables
-export DB_HOST=YOUR-RDS-ENDPOINT-GOES-HERE
+export DB_HOST=appdb-instance.cf6y4ga6mva7.ap-south-1.rds.amazonaws.com
 export DB_USER=admin
-export DB_PASSWORD=YOUR-RDS-PASSWORD-GOES-HERE
+export DB_PASSWORD=Adminnandana123
 export DB_NAME=appdb
 export PORT=8080
 
@@ -30,10 +30,13 @@ export PORT=8080
 echo "Installing dependencies..."
 npm install
 
+# Install PM2 globally if not already installed
+pm2 --version 2>/dev/null || sudo npm install -g pm2
+
 # Start or restart application with PM2
 echo "Starting application..."
 pm2 stop myapp 2>/dev/null || true
-pm2 start server.js --name myapp --env production
+pm2 start server.js --name myapp
 
 echo "===== Deployment Finished: $(date) ====="
 pm2 status
